@@ -14,11 +14,13 @@ public class WorldObjectData {
     private String name;
     private Point point;
     private String types;
+    private int hp;
 
-    public WorldObjectData(String name, Point point, String types) {
+    public WorldObjectData(String name, Point point, String types,int hp) {
         this.name = name;
         this.point = point;
         this.types = types;
+        this.hp = hp;
     }
 
     public String getName() {
