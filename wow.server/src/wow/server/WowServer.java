@@ -124,9 +124,9 @@ public class WowServer {
                                     updateToAllAfterCommand = "result "
                                             + wo.getId()
                                             + " " + wo.getType()
-                                            + " " + wo.getHp();
+                                            + " " + wo.getHp()
+                                            + " " + p.getHp();
                                 }
-
                                 return "ok";
                             }
                         }

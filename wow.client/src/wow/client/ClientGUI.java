@@ -109,11 +109,12 @@ public class ClientGUI extends javax.swing.JFrame {
                         } else if (commandType.equals("result")) {
                                 String id = st.nextToken();
                                 String type = st.nextToken();
-                                int hp = Integer.parseInt(st.nextToken());
+                                int wohp = Integer.parseInt(st.nextToken());
+                                int myhp = Integer.parseInt(st.nextToken());
                                 
                                 if (worldObjects.containsKey(id)) {
                                     WorldObjectData old = worldObjects.get(id);
-                                    old.setHp(hp);
+                                    old.setHp(myhp);
                                     old.setType(type);
                                 }
                         }
