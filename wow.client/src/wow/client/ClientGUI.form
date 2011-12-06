@@ -84,6 +84,7 @@
                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                           <Component id="hpBar" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel4" alignment="0" min="-2" pref="164" max="-2" attributes="1"/>
+                          <Component id="jehoHp" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -114,7 +115,9 @@
                   <Group type="103" groupAlignment="1" attributes="0">
                       <Group type="102" attributes="1">
                           <Component id="hpBar" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jehoHp" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
                           <Component id="jLabel4" min="-2" pref="22" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
@@ -230,6 +233,8 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="hpBar">
+        </Component>
+        <Component class="javax.swing.JProgressBar" name="jehoHp">
         </Component>
       </SubComponents>
     </Container>
