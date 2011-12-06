@@ -77,7 +77,7 @@ public class WowServer {
             String keyWord = st.nextToken();
             if (keyWord.equals("login")) {
                 String name = st.nextToken();
-                Player player = new Player(world.getEmptypoint(), world.getNextId(), name, clientAddress);
+                Player player = new Player(world.getEmptypoint(), world.getNextId(), name, clientAddress,"ALIVE",500);
      
                 sendToOneDataAboutAllObjects(player);
                 
@@ -105,6 +105,35 @@ public class WowServer {
                     updateToAllAfterCommand = "update " + wo.getId() + " " + wo.getName() + " " + wo.getPosition().x + " " + wo.getPosition().y;
                     return "ok";
                 }
+            }    else if (keyWord.equals("attack")) {
+                   
+                    String id = st.nextToken();
+                    for (Player p : world.getAllPlayers()) {
+                        if (p.getId().equals(id)) {
+
+                            WorldObject wo = world.attackObject(p);
+    if (wo != null) {
+                                if (wo.getType().equals("DEAD")) {
+                                    updateToAllAfterCommand = "result "
+                                            + wo.getId()
+                                            + " " + wo.getType()
+                                            + " " + wo.getHp();
+                                           
+
+                                } else {
+                                    updateToAllAfterCommand = "result "
+                                            + wo.getId()
+                                            + " " + wo.getType()
+                                            + " " + wo.getHp()
+                                            + " " + p.getType();
+                                }
+
+                                return "ok";
+                            }
+                        }
+
+                    }
+
             }
         } catch (NoSuchElementException ex) {
             return "error";

@@ -50,6 +50,7 @@ public class ClientGUI extends javax.swing.JFrame {
     private JLabel labels[][];
     private HashMap<String, WorldObjectData> worldObjects = new HashMap<String, WorldObjectData>();
 
+    
     /** Creates new form ClientGUI */
     public ClientGUI() {
         initComponents();
@@ -96,13 +97,27 @@ public class ClientGUI extends javax.swing.JFrame {
                                 old.setName(name);
                                 old.setPoint(new Point(x, y));
                             } else {
-                                worldObjects.put(id, new WorldObjectData(name, new Point(x, y)));
+                                worldObjects.put(id, new WorldObjectData(name, new Point(x, y),"DEAD"));  // tu sem kurva dopsal DEAD nvm jestli to ma byt jiste
                             }
                         } else if (commandType.equals("remove")) {
                             String id = st.nextToken();
                             if (worldObjects.containsKey(id)) {
                                 worldObjects.remove(id);
                             }
+                        } else if (commandType.equals("result")) {
+                                String id = st.nextToken();
+                                String type = st.nextToken();
+
+                                if (worldObjects.containsKey(id)) {
+                                    WorldObjectData old = worldObjects.get(id);
+                                    if (myID.equals(id)) {
+                                        String hp = st.nextToken();
+                                        //hp =Integer.parseInt(hp);
+                                      }
+                                    if (type.equals("DEAD")) {
+                                        old.setTypes("DEAD");
+                                    }
+                                }
                         }
                         updateView();
                     }
@@ -451,6 +466,9 @@ public class ClientGUI extends javax.swing.JFrame {
                 if (evt.getKeyCode() == 40) {
                     sendCommandToServer("move " + myID + " down");
                     smer=0;
+                }
+                if (evt.getKeyCode() == 32) {
+                    sendCommandToServer("attack " + myID);
                 }
             } catch (IOException ex) {
             }

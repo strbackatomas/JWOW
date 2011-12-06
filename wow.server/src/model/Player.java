@@ -15,8 +15,8 @@ public class Player extends Beast{
 
     InetAddress playerAddress;
     
-    public Player(Point position, String id, String name, InetAddress address) {
-        super(position, id, name);
+    public Player(Point position, String id, String name, InetAddress address, String type, int hp) {
+        super(position, id, name, type, hp);
         this.playerAddress=address;
     }
 

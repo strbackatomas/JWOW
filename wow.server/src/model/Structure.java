@@ -12,8 +12,8 @@ import java.awt.Point;
  */
 public class Structure extends WorldObject {
 
-    public Structure(Point position, String id, String name) {
-        super(position,id, name);
+    public Structure(Point position, String id, String name,String type,int hp) {
+        super(position,id, name,type,hp);
     }
 
 

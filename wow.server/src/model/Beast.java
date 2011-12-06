@@ -12,8 +12,8 @@ import java.awt.Point;
  */
 public abstract  class Beast extends WorldObject {
 
-    public Beast(Point position, String id,String name) {
-        super(position, id, name);
+    public Beast(Point position, String id,String name, String type, int hp) {
+        super(position, id, name,type,hp);
     }
 
 
