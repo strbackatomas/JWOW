@@ -65,7 +65,7 @@ public class WowServer {
     }
     private void sendToOneDataAboutAllObjects(Player target) {
         for(WorldObject wo:world.getAllWorldObjects()){
-            String data="update " + wo.getId() + " " + wo.getName() + " " + wo.getPosition().x + " " + wo.getPosition().y;
+            String data="update " + wo.getId() + " " + wo.getName() + " " + wo.getPosition().x + " " + wo.getPosition().y + " " + wo.getType() + " " + wo.getHp() ;
             sentDatagram(data, target.getPlayerAddress());
         }
     }
@@ -124,8 +124,7 @@ public class WowServer {
                                     updateToAllAfterCommand = "result "
                                             + wo.getId()
                                             + " " + wo.getType()
-                                            + " " + wo.getHp()
-                                            + " " + p.getType();
+                                            + " " + wo.getHp();
                                 }
 
                                 return "ok";

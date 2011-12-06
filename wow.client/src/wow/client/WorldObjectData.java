@@ -13,13 +13,13 @@ import java.awt.Point;
 public class WorldObjectData {
     private String name;
     private Point point;
-    private String types;
+    private String type;
     private int hp;
 
-    public WorldObjectData(String name, Point point, String types,int hp) {
+    public WorldObjectData(String name, Point point, String type,int hp) {
         this.name = name;
         this.point = point;
-        this.types = types;
+        this.type = type;
         this.hp = hp;
     }
 
@@ -39,11 +39,17 @@ public class WorldObjectData {
         this.name = name;
     }
     
-    public void setTypes(String types){
-        this.types = types;
+    public String getType(){
+        return type;
     }
-    public String getTypes(){
-        return types;
-    }
+     public int getHp(){
+         return hp;
+     }
     
+     public void setType(String type){
+         this.type = type;
+     }
+     public void setHp(int hp){
+         this.hp = hp;
+     }
 }
