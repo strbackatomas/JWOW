@@ -111,7 +111,7 @@ public class ClientGUI extends javax.swing.JFrame {
                                 String type = st.nextToken();
                                 int wohp = Integer.parseInt(st.nextToken());
                                 int myhp = Integer.parseInt(st.nextToken());
-                                jehoHp.setMaximum(1000);
+                                jehoHp.setMaximum(500);
                                 jehoHp.setMinimum(1);
                                 jehoHp.setValue(wohp);
                                 if (worldObjects.containsKey(id)) {
@@ -122,8 +122,9 @@ public class ClientGUI extends javax.swing.JFrame {
                         }
                         if (myID!=null && worldObjects.containsKey(myID)) {
                             WorldObjectData my = worldObjects.get(myID);
-                            hpBar.setMaximum(600);
+                            hpBar.setMaximum(500);
                             hpBar.setValue(my.getHp());
+                           
                             
                         }
                         updateView();
@@ -138,7 +139,7 @@ public class ClientGUI extends javax.swing.JFrame {
         thread.setDaemon(true);
 
     }
-    private Icon createIcon(String name,int x,int y) {
+    private Icon createIcon(String status, String name,int x,int y) {
         try {
             WorldObjectData my = worldObjects.get(myID);
             
@@ -165,7 +166,8 @@ public class ClientGUI extends javax.swing.JFrame {
             
             }
    }
-   else{  
+   else{
+       if("ALIVE".equals(status)){
        if("|#_tree1_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/tree.png")); name="";}
        else{
            if("|#_wall1_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/wall1.png"));name ="";}
@@ -175,10 +177,28 @@ public class ClientGUI extends javax.swing.JFrame {
                     else {
                     if("|#_truhla_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/box1.png"));name ="";}
                     else hero = ImageIO.read(getClass().getResource("/wow/client/heroB.png"));
-                }
+                    }
                     
                 }
-       }       
+       } 
+       
+       }else if("DEAD".equals(status)){
+           if("|#_tree1_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/deadTree.png")); name="";}
+       else{
+           if("|#_wall1_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/noTexture.png"));name ="";}
+           else {
+                if("|#_wall2_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/noTexture.png"));name ="";}
+                     
+                    else {
+                    if("|#_truhla_#|".equals(name)){hero = ImageIO.read(getClass().getResource("/wow/client/vyrabovano.png"));name ="";}
+                    else {hero = ImageIO.read(getClass().getResource("/wow/client/dead.png")); name="Mrtvola";}
+                    }
+                    
+                }
+       } 
+           
+           
+       }else hero = ImageIO.read(getClass().getResource("/wow/client/nonTexture.png"));
             
    }
             //BufferedImage hero = ImageIO.read(getClass().getResource("/wow/client/heroR.png"));
@@ -204,7 +224,7 @@ public class ClientGUI extends javax.swing.JFrame {
         }
         if (myID!=null && worldObjects.containsKey(myID)) {
             WorldObjectData my = worldObjects.get(myID);
-            labels[viewSize/2][viewSize/2].setIcon(createIcon(my.getName(),my.getPoint().x,my.getPoint().y));
+            labels[viewSize/2][viewSize/2].setIcon(createIcon(my.getType(),my.getName(),my.getPoint().x,my.getPoint().y));
             jLabel4.setText("Pozice: "+my.getPoint().x+"|"+my.getPoint().y);
             for(String other:worldObjects.keySet()) {
                 if(!other.equals(myID)) {
@@ -213,7 +233,7 @@ public class ClientGUI extends javax.swing.JFrame {
                     int realx = otherData.getPoint().x-my.getPoint().x+viewSize/2;
                     int realy = otherData.getPoint().y-my.getPoint().y+viewSize/2; 
                     if (realx>=0 && realx<viewSize && realy>=0 && realy<viewSize) {
-                        labels[realy][realx].setIcon(createIcon(otherData.getName(),realx,realy));
+                        labels[realy][realx].setIcon(createIcon(otherData.getType(),otherData.getName(),realx,realy));
                     }
                 }
             }
@@ -250,6 +270,8 @@ public class ClientGUI extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         hpBar = new javax.swing.JProgressBar();
         jehoHp = new javax.swing.JProgressBar();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -274,7 +296,7 @@ public class ClientGUI extends javax.swing.JFrame {
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 570, Short.MAX_VALUE)
+            .addGap(0, 581, Short.MAX_VALUE)
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,6 +341,16 @@ public class ClientGUI extends javax.swing.JFrame {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/wow/client/thunt.png"))); // NOI18N
 
+        hpBar.setForeground(new java.awt.Color(66, 105, 228));
+
+        jehoHp.setForeground(new java.awt.Color(225, 1, 1));
+
+        jLabel6.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel6.setText("My HP");
+
+        jLabel7.setForeground(new java.awt.Color(254, 254, 254));
+        jLabel7.setText("Enemy HP");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -345,15 +377,26 @@ public class ClientGUI extends javax.swing.JFrame {
                             .addComponent(logoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(hpBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jehoHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jehoHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(hpBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap())
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGap(18, 18, 18)
+                            .addComponent(jLabel6)
+                            .addContainerGap()))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -374,8 +417,12 @@ public class ClientGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(hpBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel7)
+                        .addGap(2, 2, 2)
                         .addComponent(jehoHp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(71, 71, 71)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -502,6 +549,8 @@ private void nameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jehoHp;
     private javax.swing.JButton loginButton;

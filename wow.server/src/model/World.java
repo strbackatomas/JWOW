@@ -35,26 +35,26 @@ public class World {
             
         //world.addWorldObject(new Player(new Point(3, 3), "-2", "Test", InetAddress.getLocalHost()));
         //world.addWorldObject(new Player(new Point(3, 4), "-1", "test", InetAddress.getLocalHost()));
-            world.addWorldObject(new Player(new Point(2, 3), "-1", "Test1", InetAddress.getLocalHost(),"ALIVE", 5000));
-            world.addWorldObject(new Player(new Point(3, 3), "-2", "Test2", InetAddress.getLocalHost(), "ALIVE", 200));
-            world.addWorldObject(new Structure(new Point(5, 5), "-234", "|#_truhla_#|", "TRUHLA", 500));
+            world.addWorldObject(new Player(new Point(2, 3), "-1", "Test1", InetAddress.getLocalHost(),"ALIVE", 200));
+            world.addWorldObject(new Player(new Point(3, 3), "-2", "Test2", InetAddress.getLocalHost(), "ALIVE", 400));
+            world.addWorldObject(new Structure(new Point(5, 5), "-234", "|#_truhla_#|", "ALIVE", 300));
             for(int i =0; i<1000;i++){
             int X= new Random().nextInt(500)-50;
             int Y= new Random().nextInt(500)-50;
-         //   world.addWorldObject(new Structure(world.getNewFreeRandom(), "T"+i, "|#_tree1_#|","tree",4000));
+           world.addWorldObject(new Structure(world.getNewFreeRandom(), "T"+i, "|#_tree1_#|","ALIVE",500));
         }
         //konec herniho pole
         for(int i =-251; i<=251;i++){
-        //world.addWorldObject(new Structure(new Point(251, i), "ET"+i, "|#_wall2_#|","wall",10000000));
-        //world.addWorldObject(new Structure(new Point(-251, i), "EB"+i, "|#_wall2_#|","wall",10000000));
-        //world.addWorldObject(new Structure(new Point(i, 251), "EL"+i, "|#_wall1_#|","wall",10000000));
-        //world.addWorldObject(new Structure(new Point(i,-251), "ER"+i, "|#_wall1_#|","wall",10000000));
+        world.addWorldObject(new Structure(new Point(251, i), "ET"+i, "|#_wall2_#|","ALIVE",10000000));
+        world.addWorldObject(new Structure(new Point(-251, i), "EB"+i, "|#_wall2_#|","ALIVE",10000000));
+        world.addWorldObject(new Structure(new Point(i, 251), "EL"+i, "|#_wall1_#|","ALIVE",10000000));
+        world.addWorldObject(new Structure(new Point(i,-251), "ER"+i, "|#_wall1_#|","ALIVE",10000000));
             
         }
         
         // truhly
-        for(int i =0; i<=5;i++){
-        //   world.addWorldObject(new Structure(world.getNewFreeRandom(), "TR"+i, "|#_truhla_#|","truhla",10000000));
+        for(int i =0; i<=50;i++){
+          world.addWorldObject(new Structure(world.getNewFreeRandom(), "TR"+i, "|#_truhla_#|","ALIVE",500));
        }
         
         
@@ -148,8 +148,8 @@ public class World {
             int x2 = wo.getPosition().x,
                     y2 = wo.getPosition().y;
 
-            if (isInRange( x1, y1, x2, y2)/* && !id.equals(wo.getId())*/ && wo instanceof Player || wo instanceof Structure) {
-                wo.setHp(wo.getHp() -20);
+            if (isInRange( x1, y1, x2, y2) && wo instanceof Player || wo instanceof Structure && isInRange( x1, y1, x2, y2)) {
+                wo.setHp(wo.getHp() -1);
                 if (wo.getHp() < 0) {
                    wo.setType("DEAD");
                 }

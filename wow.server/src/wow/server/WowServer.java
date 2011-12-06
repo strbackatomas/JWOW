@@ -157,7 +157,7 @@ public class WowServer {
                 printer.close();
 
                 client.close();
-                world.dump();
+                //world.dump();
 
                 if (updateToAllAfterCommand != null) {
                     sendToAllPlayers(updateToAllAfterCommand);
