@@ -91,15 +91,15 @@ public class ClientGUI extends javax.swing.JFrame {
                             String name = st.nextToken();
                             int x = Integer.parseInt(st.nextToken());
                             int y = Integer.parseInt(st.nextToken());
-                            //String type = st.nextToken();
-                            //int hp = Integer.parseInt(st.nextToken());
+                            String type = st.nextToken();
+                            int hp = Integer.parseInt(st.nextToken());
 
                             if (worldObjects.containsKey(id)) {
                                 WorldObjectData old = worldObjects.get(id);
                                 old.setName(name);
                                 old.setPoint(new Point(x, y));
                             } else {
-                                worldObjects.put(id, new WorldObjectData(name, new Point(x, y),"0",0));  // snad
+                                worldObjects.put(id, new WorldObjectData(name, new Point(x, y), type, hp));  // snad napícha vše do seznamu
                             }
                         } else if (commandType.equals("remove")) {
                             String id = st.nextToken();
@@ -109,20 +109,19 @@ public class ClientGUI extends javax.swing.JFrame {
                         } else if (commandType.equals("result")) {
                                 String id = st.nextToken();
                                 String type = st.nextToken();
-
+                                int hp = Integer.parseInt(st.nextToken());
+                                
                                 if (worldObjects.containsKey(id)) {
                                     WorldObjectData old = worldObjects.get(id);
-                                    if (myID.equals(id)) {
-                                        int hp = Integer.parseInt(st.nextToken());
-                                        old.setHp(hp);
-                                        
-
-
-                                      }
-                                    if (type.equals("DEAD")) {
-                                        old.setType("DEAD");
-                                    }
+                                    old.setHp(hp);
+                                    old.setType(type);
                                 }
+                        }
+                        if (myID!=null && worldObjects.containsKey(myID)) {
+                            WorldObjectData my = worldObjects.get(myID);
+                            hpBar.setMaximum(600);
+                            hpBar.setValue(my.getHp());
+                            
                         }
                         updateView();
                     }

@@ -83,7 +83,7 @@ public class WowServer {
                 
                 world.addWorldObject(player);
 
-                updateToAllAfterCommand = "update " + player.getId() + " " + player.getName() + " " + player.getPosition().x + " " + player.getPosition().y;
+                updateToAllAfterCommand = "update " + player.getId() + " " + player.getName() + " " + player.getPosition().x + " " + player.getPosition().y + " " + player.getType() + " " + player.getHp() ;
 
                 return player.getId();
             } else if (keyWord.equals("logout")) {
@@ -102,7 +102,7 @@ public class WowServer {
                 WorldObject wo = world.moveObject(id, direction);
                 //sendToOneDataAboutAllObjects(player);
                 if (wo != null) {
-                    updateToAllAfterCommand = "update " + wo.getId() + " " + wo.getName() + " " + wo.getPosition().x + " " + wo.getPosition().y;
+                    updateToAllAfterCommand = "update " + wo.getId() + " " + wo.getName() + " " + wo.getPosition().x + " " + wo.getPosition().y + " " + wo.getType() + " " + wo.getHp();
                     return "ok";
                 }
             }    else if (keyWord.equals("attack")) {
